@@ -2,186 +2,251 @@
 
 import React, { useState } from "react";
 import {
+  FaGlobe,
+  FaUser,
+  FaChevronDown,
   FaSearch,
   FaHeart,
-  FaBalanceScale,
+  FaExchangeAlt,
   FaShoppingCart,
-  FaGlobe,
-  FaDollarSign,
-  FaUser,
 } from "react-icons/fa";
-import { FiChevronDown } from "react-icons/fi";
 
-const Header = () => {
-  const [showLang, setShowLang] = useState(false);
-  const [showCurrency, setShowCurrency] = useState(false);
+export default function Header() {
   const [showProductDropdown, setShowProductDropdown] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
-  const [showCategoryOptions, setShowCategoryOptions] = useState(false);
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
 
   return (
-    <div className="w-full border-b">
+    <header className="w-full bg-white shadow-sm">
       {/* Top Bar */}
-      <div className="flex justify-end items-center text-sm px-6 py-2">
-        <div className="relative mr-4 cursor-pointer" onClick={() => setShowLang(!showLang)}>
-          <div className="flex items-center gap-1">
-            <FaGlobe /> English <FiChevronDown />
+      <div className="hidden md:flex justify-between px-[100px] py-1 text-sm text-gray-600">
+        <div>Contact & Support : 00 000 000 000</div>
+        <div className="flex items-center gap-4">
+          <div
+            className="relative cursor-pointer"
+            onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+          >
+            <span className="flex items-center gap-1">
+              <FaGlobe /> English <FaChevronDown className="text-xs" />
+            </span>
+            {showLanguageDropdown && (
+              <ul className="absolute top-6 right-0 bg-white shadow-md rounded-md z-10">
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  English
+                </li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  Bangla
+                </li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  Arabic
+                </li>
+              </ul>
+            )}
           </div>
-          {showLang && (
-            <div className="absolute bg-white shadow-md top-full left-0 w-32 z-10">
-              <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">English</div>
-              <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">French</div>
-              <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Spanish</div>
-            </div>
-          )}
-        </div>
-        <div className="relative mr-4 cursor-pointer" onClick={() => setShowCurrency(!showCurrency)}>
-          <div className="flex items-center gap-1">
-            <FaDollarSign /> USD <FiChevronDown />
+          <div
+            className="relative cursor-pointer"
+            onClick={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
+          >
+            <span className="flex items-center gap-1">
+              $ USD <FaChevronDown className="text-xs" />
+            </span>
+            {showCurrencyDropdown && (
+              <ul className="absolute top-6 right-0 bg-white shadow-md rounded-md z-10">
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  USD
+                </li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  BDT
+                </li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  EUR
+                </li>
+              </ul>
+            )}
           </div>
-          {showCurrency && (
-            <div className="absolute bg-white shadow-md top-full left-0 w-24 z-10">
-              <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">USD</div>
-              <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">EUR</div>
-              <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">INR</div>
-            </div>
-          )}
-        </div>
-        <div className="flex items-center gap-1 cursor-pointer">
-          <FaUser /> My Account
+          <span className="flex items-center gap-1 cursor-pointer">
+            <FaUser /> My Account
+          </span>
         </div>
       </div>
 
-      {/* Main Header */}
-      <div className="flex flex-wrap justify-between items-center p-4">
-        <div className="flex items-center gap-2">
-          <div className="text-blue-700 text-3xl font-bold flex items-center">
-            <span className="bg-blue-700 text-white p-2 rounded-full">
-              <FaShoppingCart />
-            </span>
-            eCommerce
-          </div>
-          <nav className="hidden md:flex gap-6 ml-8 text-sm font-semibold">
-            <span className="border-b-2 border-orange-500 pb-1 cursor-pointer">HOME</span>
-            <span
-              onMouseEnter={() => setShowProductDropdown(true)}
-              onMouseLeave={() => setShowProductDropdown(false)}
-              className="relative cursor-pointer hover:text-orange-500 transition-all"
-            >
-              PRODUCT
-              {showProductDropdown && (
-              <div className="absolute top-full left-0 w-screen bg-white shadow-xl p-6 grid grid-cols-5 gap-4 z-50">
-
-                  <div>
-                    <h4 className="font-bold mb-2">ELECTRONIC</h4>
-                    <ul className="space-y-1 text-sm">
-                      <li>Television</li>
-                      <li>Refrigerator</li>
-                      <li>Washing Machine</li>
-                      <li>Air Conditioners</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-bold mb-2">FASHION & BEAUTY</h4>
-                    <ul className="space-y-1 text-sm">
-                      <li>Accessories</li>
-                      <li>Bags</li>
-                      <li>Clothings</li>
-                      <li>Shoes</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-bold mb-2">CAMERA & PHOTO</h4>
-                    <ul className="space-y-1 text-sm">
-                      <li>DSLR</li>
-                      <li>Camera Phone</li>
-                      <li>Action Camera</li>
-                      <li>Digital Camera</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-bold mb-2">SMART PHONE & TABLE</h4>
-                    <ul className="space-y-1 text-sm">
-                      <li>Apple</li>
-                      <li>Samsung</li>
-                      <li>LG</li>
-                      <li>Sony</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-bold mb-2">SPORT & OUTDOOR</h4>
-                    <ul className="space-y-1 text-sm">
-                      <li>Toys & Hobbies</li>
-                      <li>Books & Office</li>
-                      <li>Portable & Personal</li>
-                    </ul>
-                  </div>
-                </div>
-              )}
-            </span>
-            <span className="cursor-pointer hover:text-orange-500 transition">PAGES</span>
-            <span className="cursor-pointer hover:text-orange-500 transition">BLOG</span>
-            <span className="cursor-pointer hover:text-orange-500 transition">FAQ</span>
-            <span className="cursor-pointer hover:text-orange-500 transition">CONTACT</span>
-          </nav>
+      {/* Main Nav */}
+      <div className="flex flex-wrap items-center justify-between px-[100px] py-4">
+        {/* Logo */}
+        <div className="text-3xl font-bold text-blue-700 flex items-center gap-2">
+          <img
+            src="https://eco.rafiinternational.com/assets/images/1685267209logopng.png"
+            alt="logo"
+            className="w-[262px] h-[40px]"
+          />
         </div>
 
-        {/* Search bar */}
-        <div className="flex flex-wrap items-center mt-4 md:mt-0 gap-2 bg-gray-100 p-2 rounded-full w-full md:w-auto">
+        {/* Menu */}
+        <nav className="flex items-center gap-6 text-sm font-medium">
+          <a href="#" className="border-b-2 border-orange-400 pb-1">
+            HOME
+          </a>
+          <div
+            className="relative group cursor-pointer select-none"
+            onMouseEnter={() => setShowProductDropdown(true)}
+            onMouseLeave={() => setShowProductDropdown(false)}
+          >
+            <div className="flex items-center gap-1">
+              <span className="font-semibold">PRODUCT</span>
+              <FaChevronDown
+                className={`transition-transform duration-300 text-sm ${
+                  showProductDropdown ? "rotate-180 text-orange-500" : ""
+                }`}
+              />
+            </div>
+
+            {/* Dropdown */}
+            <div
+              className={`absolute left-[300px] transform -translate-x-1/2 top-full mt-4 bg-white shadow-xl rounded-md p-6 grid grid-cols-4 gap-6 w-[90vw] z-20 transition-all duration-300 ease-in-out origin-top ${
+                showProductDropdown
+                  ? "opacity-100 scale-100 pointer-events-auto"
+                  : "opacity-0 scale-95 pointer-events-none"
+              }`}
+            >
+              {/* Column 1 */}
+              <div>
+                <h4 className="font-bold mb-2">ELECTRONIC</h4>
+                <ul className="space-y-1 text-sm leading-[38px]">
+                  <li className="hover:text-orange-500 transition">
+                    TELEVISION
+                  </li>
+                  <li className="hover:text-orange-500 transition">
+                    REFRIGERATOR
+                  </li>
+                  <li className="hover:text-orange-500 transition">
+                    WASHING MACHINE
+                  </li>
+                  <li className="hover:text-orange-500 transition">
+                    AIR CONDITIONERS
+                  </li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    SPORT & OUTDOOR
+                  </li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    TOYS & HOBBIES
+                  </li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    OUTDOOR, RECREATION
+                  </li>
+                </ul>
+              </div>
+
+              {/* Column 2 */}
+              <div>
+                <h4 className="font-bold mb-2">FASHION & BEAUTY</h4>
+                <ul className="space-y-1 text-sm leading-[38px]">
+                  <li className="hover:text-orange-500 transition">
+                    ACCESSORIES
+                  </li>
+                  <li className="hover:text-orange-500 transition">BAGS</li>
+                  <li className="hover:text-orange-500 transition">
+                    CLOTHINGS
+                  </li>
+                  <li className="hover:text-orange-500 transition">SHOES</li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    JEWELRY & WATCHES
+                  </li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    AUTOMOBILES
+                  </li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    SURVEILLANCE SAFETY
+                  </li>
+                </ul>
+              </div>
+
+              {/* Column 3 */}
+              <div>
+                <h4 className="font-bold mb-2">CAMERA & PHOTO</h4>
+                <ul className="space-y-1 text-sm leading-[38px]">
+                  <li className="hover:text-orange-500 transition">DSLR</li>
+                  <li className="hover:text-orange-500 transition">
+                    Camera Phone
+                  </li>
+                  <li className="hover:text-orange-500 transition">
+                    Action Camera
+                  </li>
+                  <li className="hover:text-orange-500 transition">
+                    Digital Camera
+                  </li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    HEALTH & BEAUTY
+                  </li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    HOME DECORATION
+                  </li>
+                </ul>
+              </div>
+
+              {/* Column 4 */}
+              <div>
+                <h4 className="font-bold mb-2">SMART PHONE & TABLE</h4>
+                <ul className="space-y-1 text-sm leading-[38px]">
+                  <li className="hover:text-orange-500 transition">APPLE</li>
+                  <li className="hover:text-orange-500 transition">SAMSUNG</li>
+                  <li className="hover:text-orange-500 transition">LG</li>
+                  <li className="hover:text-orange-500 transition">SONY</li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    BOOKS & OFFICE
+                  </li>
+                  <li className="font-bold hover:text-orange-500 transition">
+                    PORTABLE & PERSONAL
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <a href="#">PAGES</a>
+          <a href="#">BLOG</a>
+          <a href="#">FAQ</a>
+          <a href="#">CONTACT</a>
+        </nav>
+
+        {/* Search and Icons */}
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-2 py-1 w-[380px]">
           <input
             type="text"
             placeholder="Search Product For"
-            className="bg-transparent px-4 outline-none flex-grow"
+            className="bg-transparent flex-grow px-3 outline-none text-sm"
           />
-          <div className="relative cursor-pointer" onClick={() => setShowCategoryOptions(!showCategoryOptions)}>
-            <div className="flex items-center gap-1 px-4">
-              {selectedCategory} <FiChevronDown />
-            </div>
-            {showCategoryOptions && (
-              <div className="absolute bg-white shadow-md top-full left-0 w-40 z-10">
-                {[
-                  "All Categories",
-                  "Smartphones",
-                  "Laptops",
-                  "Fashion",
-                  "Home Appliances",
-                ].map((category) => (
-                  <div
-                    key={category}
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => {
-                      setSelectedCategory(category);
-                      setShowCategoryOptions(false);
-                    }}
-                  >
-                    {category}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <button className="bg-black text-white p-2 rounded-full">
+          <select className="bg-transparent text-sm outline-none">
+            <option>All Categories</option>
+            <option>Electronics</option>
+            <option>Fashion</option>
+            <option>Books</option>
+          </select>
+          <button className="bg-black text-white rounded-full p-2">
             <FaSearch />
           </button>
         </div>
 
-        {/* Icons */}
-        <div className="flex items-center gap-4 mt-4 md:mt-0">
-          {[FaHeart, FaBalanceScale, FaShoppingCart].map((Icon, i) => (
-            <div
-              key={i}
-              className="relative bg-gray-100 rounded-full p-2 text-black hover:text-orange-500 transition"
-            >
-              <Icon size={18} />
-              <span className="absolute -top-1 -right-1 text-xs bg-gray-800 text-white rounded-full w-4 h-4 flex items-center justify-center">
-                0
-              </span>
-            </div>
-          ))}
+        <div className="flex items-center gap-4 ml-4">
+          <div className="relative">
+            <FaHeart className="text-lg" />
+            <span className="absolute -top-2 -right-2 bg-gray-800 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              0
+            </span>
+          </div>
+          <div className="relative">
+            <FaExchangeAlt className="text-lg" />
+            <span className="absolute -top-2 -right-2 bg-gray-800 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              0
+            </span>
+          </div>
+          <div className="relative">
+            <FaShoppingCart className="text-lg" />
+            <span className="absolute -top-2 -right-2 bg-gray-800 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              0
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </header>
   );
-};
-
-export default Header;
+}
