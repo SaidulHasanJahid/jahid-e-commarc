@@ -1,12 +1,12 @@
 'use client';
 
-import './ind.css'
+import './ind.css';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const slides = [
@@ -53,18 +53,26 @@ export default function HeroCarousel() {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <div
-              className="w-full h-full bg-cover bg-right-center flex items-center  justify-start pl-5 sm:pl-10"
-              style={{ backgroundImage: `url(${slide.image})` } }
-            >
-              
-              <div className="bg-white/0 text-black max-w-md px-5 py-3 md:ml-60">
-                <h4 className="text-xl font-semibold mb-2">{slide.title}</h4>
-                <h1 className="text-4xl md:text-6xl font-bold mb-4">{slide.discount}</h1>
-                <p className="text-base md:text-lg font-semibold mb-4">{slide.subtitle}</p>
-                <button className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">
-                  {slide.button}
-                </button>
+            <div className="relative w-full h-full">
+              {/* Next.js Image for background */}
+              <Image
+                src={slide.image}
+                alt={slide.title}
+                fill
+                className="object-cover"
+                priority
+              />
+
+              {/* Text Content */}
+              <div className="absolute inset-0 flex items-center justify-start pl-5 sm:pl-10">
+                <div className="bg-white/0 text-black max-w-md px-5 py-3 md:ml-60">
+                  <h4 className="text-xl font-semibold mb-2">{slide.title}</h4>
+                  <h1 className="text-4xl md:text-6xl font-bold mb-4">{slide.discount}</h1>
+                  <p className="text-base md:text-lg font-semibold mb-4">{slide.subtitle}</p>
+                  <button className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">
+                    {slide.button}
+                  </button>
+                </div>
               </div>
             </div>
           </SwiperSlide>
@@ -72,8 +80,7 @@ export default function HeroCarousel() {
 
         {/* Custom Arrows */}
         <div className="swiper-button-prev z-50 absolute top-1/2 left-4 transform -translate-y-1/2 text-white icon-pev">
-        <FaChevronLeft size={40} />
-
+          <FaChevronLeft size={40} />
         </div>
         <div className="swiper-button-next z-50 icon-next absolute top-1/2 right-4 transform -translate-y-1/2 text-white">
           <FaChevronRight size={50} />
@@ -81,30 +88,7 @@ export default function HeroCarousel() {
       </Swiper>
 
       {/* Pagination bullets customization */}
-      <style jsx global>{`
-        .swiper-pagination-bullets {
-          bottom: 20px !important;
-          display: flex;
-          justify-content: center;
-        }
 
-        .swiper-pagination-bullet {
-          background: white !important;
-          opacity: 0.6;
-          width: 10px;
-          height: 10px;
-          margin: 0 5px;
-        }
-
-        .swiper-pagination-bullet-active {
-          opacity: 1;
-        }
-
-        .swiper-button-prev::after,
-        .swiper-button-next::after {
-          display: none;
-        }
-      `}</style>
     </div>
   );
 }

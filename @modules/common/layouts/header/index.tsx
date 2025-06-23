@@ -1,252 +1,164 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-  FaGlobe,
-  FaUser,
-  FaChevronDown,
-  FaSearch,
   FaHeart,
-  FaExchangeAlt,
+  FaRandom,
   FaShoppingCart,
+  FaSearch,
+  FaChevronDown,
 } from "react-icons/fa";
+import Image from "next/image";
+import clsx from "clsx";
+import RightDrawer from "./right-drawer";
+import TopBar from "./top-bar";
 
 export default function Header() {
   const [showProductDropdown, setShowProductDropdown] = useState(false);
-  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
-  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+  const [showPagesDropdown, setShowPagesDropdown] = useState(false);
 
   return (
-    <header className="w-full bg-white shadow-sm">
-      {/* Top Bar */}
-      <div className="hidden md:flex justify-between px-[100px] py-1 text-sm text-gray-600">
-        <div>Contact & Support : 00 000 000 000</div>
-        <div className="flex items-center gap-4">
-          <div
-            className="relative cursor-pointer"
-            onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-          >
-            <span className="flex items-center gap-1">
-              <FaGlobe /> English <FaChevronDown className="text-xs" />
-            </span>
-            {showLanguageDropdown && (
-              <ul className="absolute top-6 right-0 bg-white shadow-md rounded-md z-10">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  English
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Bangla
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Arabic
-                </li>
-              </ul>
-            )}
+    <header className="sticky top-0 z-[99] bg-[#fcf9f8] shadow-md font-sans">
+      {/* Top bar */}
+    <TopBar />
+
+      {/* Main header */}
+      <div className=" lg:w-[90%] m-auto  flex flex-col md:flex-row items-center justify-between px-4 lg:px-6 py-4 gap-4 md:gap-0">
+        <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-start">
+          <div className="md:hidden">
+           {/* Drawer with tabs */}
+          
+          <RightDrawer />
+
+
           </div>
-          <div
-            className="relative cursor-pointer"
-            onClick={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
-          >
-            <span className="flex items-center gap-1">
-              $ USD <FaChevronDown className="text-xs" />
-            </span>
-            {showCurrencyDropdown && (
-              <ul className="absolute top-6 right-0 bg-white shadow-md rounded-md z-10">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  USD
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  BDT
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  EUR
-                </li>
-              </ul>
-            )}
+          <div>
+            <Image
+              src="https://eco.rafiinternational.com/assets/images/1685267209logopng.png"
+              alt="Logo"
+              width={140}
+              height={40}
+              className="cursor-pointer"
+            />
           </div>
-          <span className="flex items-center gap-1 cursor-pointer">
-            <FaUser /> My Account
-          </span>
+          <nav className="hidden md:flex gap-6 text-sm font-semibold text-black text-[13px]">
+            {["HOME", "PRODUCT", "PAGES", "BLOG", "FAQ", "CONTACT"].map((item) => {
+              const isProduct = item === "PRODUCT";
+              const isPages = item === "PAGES";
+              return (
+                <div
+                  key={item}
+                  className="relative group cursor-pointer"
+                  onMouseEnter={() => {
+                    if (isProduct) setShowProductDropdown(true);
+                    if (isPages) setShowPagesDropdown(true);
+                  }}
+                  onMouseLeave={() => {
+                    if (isProduct) setShowProductDropdown(false);
+                    if (isPages) setShowPagesDropdown(false);
+                  }}
+                >
+                  <span className="flex items-center gap-1">
+                    {item}
+                    {(isProduct || isPages) && <FaChevronDown className="text-xs" />}
+                  </span>
+
+                  {isProduct && (
+                    <div
+                      className={clsx(
+                        "absolute left-0 top-full mt-4 w-[900px] lg:ml-[-200px] bg-white p-6 grid grid-cols-4 gap-4 shadow-xl transition-all duration-300 rounded-md z-50",
+                        showProductDropdown ? "opacity-100 visible scale-100" : "opacity-0 invisible scale-95"
+                      )}
+                      style={{ fontSize: "13px", color: "rgb(27,27,30)", lineHeight:"35px" }}
+                    >
+                      {[
+                        {
+                          title: "ELECTRONIC",
+                          items: ["TELEVISION", "REFRIGERATOR", "WASHING MACHINE", "AIR CONDITIONERS", "SPORT & OUTDOOR", "TOYS & HOBBIES", "OUTDOOR, RECREATION"],
+                        },
+                        {
+                          title: "FASHION & BEAUTY",
+                          items: ["ACCESSORIES", "BAGS", "CLOTHINGS", "SHOES", "JEWELRY & WATCHES", "AUTOMOBILES", "SURVEILLANCE SAFETY"],
+                        },
+                        {
+                          title: "CAMERA & PHOTO",
+                          items: ["DSLR", "Camera Phone", "Action Camera", "Digital Camera", "HEALTH & BEAUTY", "HOME DECORATION"],
+                        },
+                        {
+                          title: "SMART PHONE & TABLE",
+                          items: ["APPLE", "SAMSUNG", "LG", "SONY", "BOOKS & OFFICE", "PORTABLE & PERSONAL"],
+                        },
+                      ].map((section, i) => (
+                        <div key={i}>
+                          <h3 className="font-bold text-[13px] mb-2">{section.title}</h3>
+                          <ul className="space-y-1">
+                            {section.items.map((item, j) => (
+                              <li key={j} className="hover:text-[#6b3d2e]">{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {isPages && (
+                    <div
+                      className={clsx(
+                        "absolute left-0 top-full mt-4 w-48 bg-white p-4 shadow-xl rounded-md z-50 transition-transform duration-300 ease-in-out origin-top",
+                        showPagesDropdown ? "opacity-100 visible scale-100" : "opacity-0 invisible scale-95"
+                      )}
+                      style={{ fontSize: "13px", color: "rgb(27,27,30)" }}
+                    >
+                      <ul className="space-y-2">
+                        {["About Us", "Team", "Services", "404 Page"].map((page, i) => (
+                          <li key={i}>{page}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+        </div>
+
+        <div className="flex items-center gap-3 w-full md:w-auto flex-wrap justify-end">
+          <div className="flex items-stretch h-[45px] rounded-full w-full sm:w-auto overflow-hidden border border-gray-200">
+            <input
+              type="text"
+              placeholder="Search Product For"
+              className="px-4 py-2 w-full sm:w-[180px] text-sm outline-none"
+              style={{ border: "none", color: "rgb(27,27,30)" }}
+            />
+            <select className="px-2 text-sm text-gray-600" style={{ border: "none", outline: "none" }}>
+              <option>All Categories</option>
+              <option>Smartphone</option>
+              <option>Laptop</option>
+              <option>Gaming</option>
+            </select>
+            <button className="bg-black text-white px-4 flex items-center justify-center">
+              <FaSearch />
+            </button>
+          </div>
+
+          <div className="flex gap-2">
+            {[FaHeart, FaRandom, FaShoppingCart].map((Icon, i) => (
+              <div
+                key={i}
+                className="relative w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer"
+              >
+                <Icon className="text-gray-700 text-sm" />
+                <span className="absolute -top-1 -right-1 bg-[rgb(27,27,30)] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                  0
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Main Nav */}
-      <div className="flex flex-wrap items-center justify-between px-[100px] py-4">
-        {/* Logo */}
-        <div className="text-3xl font-bold text-blue-700 flex items-center gap-2">
-          <img
-            src="https://eco.rafiinternational.com/assets/images/1685267209logopng.png"
-            alt="logo"
-            className="w-[262px] h-[40px]"
-          />
-        </div>
 
-        {/* Menu */}
-        <nav className="flex items-center gap-6 text-sm font-medium">
-          <a href="#" className="border-b-2 border-orange-400 pb-1">
-            HOME
-          </a>
-          <div
-            className="relative group cursor-pointer select-none"
-            onMouseEnter={() => setShowProductDropdown(true)}
-            onMouseLeave={() => setShowProductDropdown(false)}
-          >
-            <div className="flex items-center gap-1">
-              <span className="font-semibold">PRODUCT</span>
-              <FaChevronDown
-                className={`transition-transform duration-300 text-sm ${
-                  showProductDropdown ? "rotate-180 text-orange-500" : ""
-                }`}
-              />
-            </div>
 
-            {/* Dropdown */}
-            <div
-              className={`absolute left-[300px] transform -translate-x-1/2 top-full mt-4 bg-white shadow-xl rounded-md p-6 grid grid-cols-4 gap-6 w-[90vw] z-20 transition-all duration-300 ease-in-out origin-top ${
-                showProductDropdown
-                  ? "opacity-100 scale-100 pointer-events-auto"
-                  : "opacity-0 scale-95 pointer-events-none"
-              }`}
-            >
-              {/* Column 1 */}
-              <div>
-                <h4 className="font-bold mb-2">ELECTRONIC</h4>
-                <ul className="space-y-1 text-sm leading-[38px]">
-                  <li className="hover:text-orange-500 transition">
-                    TELEVISION
-                  </li>
-                  <li className="hover:text-orange-500 transition">
-                    REFRIGERATOR
-                  </li>
-                  <li className="hover:text-orange-500 transition">
-                    WASHING MACHINE
-                  </li>
-                  <li className="hover:text-orange-500 transition">
-                    AIR CONDITIONERS
-                  </li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    SPORT & OUTDOOR
-                  </li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    TOYS & HOBBIES
-                  </li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    OUTDOOR, RECREATION
-                  </li>
-                </ul>
-              </div>
-
-              {/* Column 2 */}
-              <div>
-                <h4 className="font-bold mb-2">FASHION & BEAUTY</h4>
-                <ul className="space-y-1 text-sm leading-[38px]">
-                  <li className="hover:text-orange-500 transition">
-                    ACCESSORIES
-                  </li>
-                  <li className="hover:text-orange-500 transition">BAGS</li>
-                  <li className="hover:text-orange-500 transition">
-                    CLOTHINGS
-                  </li>
-                  <li className="hover:text-orange-500 transition">SHOES</li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    JEWELRY & WATCHES
-                  </li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    AUTOMOBILES
-                  </li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    SURVEILLANCE SAFETY
-                  </li>
-                </ul>
-              </div>
-
-              {/* Column 3 */}
-              <div>
-                <h4 className="font-bold mb-2">CAMERA & PHOTO</h4>
-                <ul className="space-y-1 text-sm leading-[38px]">
-                  <li className="hover:text-orange-500 transition">DSLR</li>
-                  <li className="hover:text-orange-500 transition">
-                    Camera Phone
-                  </li>
-                  <li className="hover:text-orange-500 transition">
-                    Action Camera
-                  </li>
-                  <li className="hover:text-orange-500 transition">
-                    Digital Camera
-                  </li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    HEALTH & BEAUTY
-                  </li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    HOME DECORATION
-                  </li>
-                </ul>
-              </div>
-
-              {/* Column 4 */}
-              <div>
-                <h4 className="font-bold mb-2">SMART PHONE & TABLE</h4>
-                <ul className="space-y-1 text-sm leading-[38px]">
-                  <li className="hover:text-orange-500 transition">APPLE</li>
-                  <li className="hover:text-orange-500 transition">SAMSUNG</li>
-                  <li className="hover:text-orange-500 transition">LG</li>
-                  <li className="hover:text-orange-500 transition">SONY</li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    BOOKS & OFFICE
-                  </li>
-                  <li className="font-bold hover:text-orange-500 transition">
-                    PORTABLE & PERSONAL
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <a href="#">PAGES</a>
-          <a href="#">BLOG</a>
-          <a href="#">FAQ</a>
-          <a href="#">CONTACT</a>
-        </nav>
-
-        {/* Search and Icons */}
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-2 py-1 w-[380px]">
-          <input
-            type="text"
-            placeholder="Search Product For"
-            className="bg-transparent flex-grow px-3 outline-none text-sm"
-          />
-          <select className="bg-transparent text-sm outline-none">
-            <option>All Categories</option>
-            <option>Electronics</option>
-            <option>Fashion</option>
-            <option>Books</option>
-          </select>
-          <button className="bg-black text-white rounded-full p-2">
-            <FaSearch />
-          </button>
-        </div>
-
-        <div className="flex items-center gap-4 ml-4">
-          <div className="relative">
-            <FaHeart className="text-lg" />
-            <span className="absolute -top-2 -right-2 bg-gray-800 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              0
-            </span>
-          </div>
-          <div className="relative">
-            <FaExchangeAlt className="text-lg" />
-            <span className="absolute -top-2 -right-2 bg-gray-800 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              0
-            </span>
-          </div>
-          <div className="relative">
-            <FaShoppingCart className="text-lg" />
-            <span className="absolute -top-2 -right-2 bg-gray-800 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              0
-            </span>
-          </div>
-        </div>
-      </div>
     </header>
   );
 }

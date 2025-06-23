@@ -44,12 +44,19 @@ const categories: Category[] = [
 
 export default function FirstCard() {
   return (
-    <section className="w-[98%] mx-auto py-10 bg-white cursor-pointer">
+    <section className="w-full bg-white py-10 px-[50px] ">
       <div className="flex flex-wrap justify-center gap-6">
         {categories.map((item, id) => (
           <div
             key={id}
-            className="relative w-[285px] h-[322px] sm:w-[50%] sm:h-[300px] md:w-[32%] lg:w-[285px] lg:h-[322px] overflow-hidden shadow-lg group hover:shadow-md transition duration-300 rounded"
+            className={`
+              w-full cursor-pointer
+              [@media_(min-width:400px)_and_(max-width:550px)]:w-[48%]
+              sm:w-[48%]
+              lg:w-[30%]
+              h-[240px] sm:h-[260px] :h-[350px] lg:h-[300px] xl:h-[322px]
+              relative overflow-hidden shadow-lg group hover:shadow-md transition duration-300 rounded
+            `}
           >
             <Image
               src={item.image}
@@ -58,7 +65,7 @@ export default function FirstCard() {
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 285px"
               className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
             />
-            <div className="top-[120px] absolute bottom-3 left-1/2 transform -translate-x-1/2 h-[75px] w-[90%] bg-white text-center py-2 px-3 rounded shadow-md transition-all duration-500 ease-in-out group-hover:-translate-y-1">
+            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 h-[75px] w-[90%] bg-white text-center py-2 px-3 rounded shadow-md transition-all duration-500 ease-in-out group-hover:-translate-y-1">
               <h3 className="font-semibold text-gray-900 mt-1">{item.title}</h3>
               <p className="text-gray-500">({item.count})</p>
             </div>
@@ -66,5 +73,5 @@ export default function FirstCard() {
         ))}
       </div>
     </section>
-  )
+  );
 }
